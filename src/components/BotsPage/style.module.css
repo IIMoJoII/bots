@@ -1,0 +1,108 @@
+.botsPage{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+
+    background-color: white;
+}
+
+.bots{
+    width: 80vw;
+    margin-left: calc(50vw - 40vw);
+}
+
+.logout{
+    height: 40px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.headers{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.botInfo{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: row;
+
+
+    justify-content: space-between;
+
+    border: 2px solid black;
+    padding: 0 20px;
+}
+
+.state{
+    display: flex;
+    flex-direction: column;
+}
+
+.botParams{
+    display: flex;
+    flex-direction: column;
+    width: 360px;
+    border-right: 1px solid black;
+    padding: 20px 0;
+}
+
+.state{
+    margin-left: 70px;
+    margin-top: -37px;
+}
+
+.cfg{
+    margin-left: 50px;
+    margin-top: -37px;
+
+}
+
+.last{
+    border: none;
+}
+
+.stateParams{
+    display: flex;
+
+}
+
+.stateParams span{
+    cursor: pointer;
+}
+
+.onClickMenu{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: absolute;
+    background-color: white;
+
+    border: 1px solid blue;
+    height: 70px;
+
+    margin-left: 50px;
+}
+
+.onClickMenu ul{
+    display: flex;
+    flex-direction: column;
+}
+
+.onClickMenu li{
+    display: flex;
+    justify-content: center;
+    margin-left: -40px;
+    width: 100px;
+    cursor: pointer;
+    list-style-type: none;
+}
+
+.onClickMenu li:hover{
+    background-color: rgba(91, 183, 223, 0.7);
+}
+

@@ -1,25 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import SignInForm from "./components/SignIn";
+import BotsPage from "./components/BotsPage"
+
+import './App.css'
+import bcryptjs from "bcryptjs";
+
 
 function App() {
+    const [login, setLogin] = React.useState(null)
+    const [password, setPassword] = React.useState(null)
+
+    const setUserData = (callbackLogin, callbackPassword) => {
+        bcryptjs.compare('test', callbackLogin, function(err, result) {
+            if(result)
+                setLogin(true)
+        });
+
+        bcryptjs.compare('12345', callbackPassword, function(err, result) {
+            if(result)
+                setPassword(true)
+        });
+    }
+
+    const deleteUserData = () => {
+        setLogin(false)
+        setPassword(false)
+    }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <>
+          <SignInForm setUserData={(callbackLogin, callbackPassword) => setUserData(callbackLogin, callbackPassword)}/>
+          {login && password && <BotsPage deleteUserData={deleteUserData}/>}
+      </>
+  )
 }
 
-export default App;
+export default App

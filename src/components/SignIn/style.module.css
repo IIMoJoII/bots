@@ -1,0 +1,17 @@
+.signInForm{
+    position: absolute;
+    width: 230px;
+    height: 170px;
+    margin-top: calc(50vh - 85px);
+    margin-left: calc(50vw - 122px);
+}
+
+.form{
+    display: flex;
+    flex-direction: column;
+}
+
+.signInBtn{
+    margin-top: 10px;
+    margin-left: 105px;
+}
