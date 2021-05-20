@@ -1,8 +1,8 @@
 {
   "bots": [
     {
-      "id": 123,
-      "token": 2343423,
+      "id": "123",
+      "token": "2343423",
       "state": {
         "status": "ok",
         "mood": "normal",
@@ -13,8 +13,8 @@
       }
     },
     {
-      "id": 321543,
-      "token": 3352255,
+      "id": "321543",
+      "token": "3352255",
       "state": {
         "status": "offline",
         "mood": "tired",

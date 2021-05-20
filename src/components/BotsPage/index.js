@@ -7,19 +7,37 @@ import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissa
 
 import s from './style.module.css'
 import DatePickers from "../DatePicker";
+import InputField from "../InputField";
 
 
 export default function BotsPage({deleteUserData}) {
-    const botsArr = bots;
+    const [botsArr, setBotsArr] = React.useState(bots.bots)
     const [stateMenu, setStateMenu] = React.useState(false)
     const [moodMenu, setMoodMenu] = React.useState(false)
     const [modeMenu, setModeMenu] = React.useState(false)
     const [clickID, setClickID] = React.useState(null)
+    const [addBotModal, setAddBotModal] = React.useState(false)
+    const botAddInfo = {
+        id: "",
+        token: "",
+        state: {
+            status: "ok",
+            mood: "normal",
+            mode: "manual"
+        },
+        cfg: {
+            timestamp: ""
+        }
+    }
 
 
     const handleLogOutCallback = React.useCallback(() => {
         deleteUserData()
     }, [deleteUserData])
+
+    const handleOpenAddBot = () => {
+        setAddBotModal(!addBotModal)
+    }
 
     const handleStatusClick = (id, info) => {
         setClickID(id)
@@ -33,32 +51,77 @@ export default function BotsPage({deleteUserData}) {
     }
 
     const handleStateParameterClicked = (parameter, id, info) => {
-        const index = botsArr.bots.map(e => e.id).indexOf(id);
+        const index = botsArr.map(e => e.id).indexOf(id);
+        let bots = [...botsArr]
 
         if(info === 'status') {
-            botsArr.bots[index].state.status = parameter
+            bots[index].state.status = parameter
             setStateMenu(!stateMenu)
         } else if(info === 'mood'){
-            botsArr.bots[index].state.mood = parameter
+            bots[index].state.mood = parameter
             setMoodMenu(!moodMenu)
         } else if(info === 'mode'){
-            botsArr.bots[index].state.mode = parameter
+            bots[index].state.mode = parameter
             setModeMenu(!modeMenu)
         }
+
+        for(let i = 0; i < bots.length; i++){
+            console.log(bots[i].id)
+            console.log(bots[i].state.status)
+        }
+
+        setBotsArr(bots)
     }
 
     const handleGetDate = (newDate, id) => {
-        const index = botsArr.bots.map(e => e.id).indexOf(id);
-
-        botsArr.bots[index].cfg.timestamp = newDate
-
-        console.log(botsArr)
+        const index = botsArr.map(e => e.id).indexOf(id);
+        botsArr[index].cfg.timestamp = newDate
     }
+
+    const handleGetText = (text, name) => {
+        if(name === 'ID')
+            botAddInfo.id = text
+
+        if(name === 'Token')
+            botAddInfo.token = text
+    }
+
+    const handleAddDate = (newDate) => {
+        if(newDate !== '')
+            botAddInfo.cfg.timestamp = newDate
+    }
+
+
+    const handleAddBot = () => {
+        if(botAddInfo.token !== '' && botAddInfo.id !== '' && botAddInfo.cfg.timestamp !== ''){
+            setBotsArr(botsArr => [...botsArr, botAddInfo])
+            setAddBotModal(!addBotModal)
+        }
+    }
+
+
+    const handleDeleteBot = (BotId) => {
+        setBotsArr(botsArr.filter(item => item.id !== BotId))
+    };
 
 
     return(
         <>
             <div className={s.botsPage}>
+
+                {addBotModal && <div className={s.blackScreen}/>}
+                {addBotModal && <div className={s.addBotModal}>
+                    <InputField getText={handleGetText} name={'ID'}/>
+                    <InputField getText={handleGetText} name={'Token'}/>
+                    <div className={s.datePicker}>
+                        <DatePickers getDate={(newDate) => handleAddDate(newDate)} />
+                    </div>
+                    <div className={s.modalButtons}>
+                        <button onClick={handleAddBot}>Add</button>
+                        <button onClick={(text, name) => handleOpenAddBot(text, name)}>Close</button>
+                    </div>
+                </div>}
+
                 <div className={s.bots}>
 
                     <div className={s.headers}>
@@ -66,9 +129,12 @@ export default function BotsPage({deleteUserData}) {
                         <button className={s.logout} onClick={handleLogOutCallback}>Logout</button>
                     </div>
 
-                    {botsArr.bots.map((info) => <div key={info.id} className={s.botInfo}>
+                    <button onClick={handleOpenAddBot} className={s.addBot}>Add New Bot</button>
+
+                    {botsArr.map((info) => <div key={info.id} className={s.botInfo}>
                         <div className={s.botParams}>
                             <p>ID: {info.id}</p>
+                            <button onClick={() => handleDeleteBot(info.id)} className={s.deleteBot}>Delete Bot</button>
                         </div>
                         <div className={s.botParams}>
                             <p>Token: {info.token}</p>
