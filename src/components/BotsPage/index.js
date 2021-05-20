@@ -30,7 +30,6 @@ export default function BotsPage({deleteUserData}) {
         }
     }
 
-
     const handleLogOutCallback = React.useCallback(() => {
         deleteUserData()
     }, [deleteUserData])
@@ -63,11 +62,6 @@ export default function BotsPage({deleteUserData}) {
         } else if(info === 'mode'){
             bots[index].state.mode = parameter
             setModeMenu(!modeMenu)
-        }
-
-        for(let i = 0; i < bots.length; i++){
-            console.log(bots[i].id)
-            console.log(bots[i].state.status)
         }
 
         setBotsArr(bots)
